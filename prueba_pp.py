@@ -6,7 +6,7 @@ import heapq
 
 #air_ports= ["BOG", "MDE", "BAQ", "BGA", "SMR", "CTG", "CLO", "EOH"]
 
-flights = {"LUNES":[
+itinerario = {"LUNES":[
     ("BOG", "MDE", 60),
     ("BOG", "BAQ", 90),
     ("MDE", "CTG", 75),
@@ -51,26 +51,26 @@ flights = {"LUNES":[
 
 }
 
-grafo_vuelos_por_dia= defaultdict(dict)
+grafo_vuelos= defaultdict(dict)
 
 # for origin, destination, time in flights:
 #     grafo_vuelos_por_dia[origin].append((destination, time))
 #     grafo_vuelos_por_dia[destination].append((origin, time))
 
 
-for dia, vuelos in flights.items():
+for dia, vuelos in itinerario.items():
 
-    grafo_vuelos = defaultdict(list) 
+    aux_grafo = defaultdict(list) 
     
     for origen, destino, duracion in vuelos:
-        grafo_vuelos[origen].append((destino, duracion))
-        grafo_vuelos[destino].append((origen, duracion))  
-    grafo_vuelos_por_dia[dia] = grafo_vuelos  
+        aux_grafo[origen].append((destino, duracion))
+        aux_grafo[destino].append((origen, duracion))  
+    grafo_vuelos[dia] = aux_grafo  
 
 #print(grafo_vuelos_por_dia)
 #print(grafo_vuelos_por_dia["LUNES"])
 
-def rutas_dijkstra(grafo, origen, destino):
+def rutasDijkstra(grafo, origen, destino):
     cola_prioridad = [(0, origen, [])] 
     rutas = []
 
@@ -91,13 +91,13 @@ def rutas_dijkstra(grafo, origen, destino):
     return rutas_ordenadas
 
 
-def encontrar_todas_las_rutas(dia, origen, destino):
-    if dia not in grafo_vuelos_por_dia:
+def rutasTotales(dia, origen, destino):
+    if dia not in grafo_vuelos:
         print(f"No hay datos de vuelos para el día {dia}.")
         return None
 
-    grafo = grafo_vuelos_por_dia[dia]
-    rutas_ordenadas = rutas_dijkstra(grafo, origen, destino)
+    grafo = grafo_vuelos[dia]
+    rutas_ordenadas = rutasDijkstra(grafo, origen, destino)
 
     if rutas_ordenadas:
         print(f"Todas las rutas de {origen} a {destino} en {dia}, ordenadas de menor a mayor duración:")
@@ -111,5 +111,5 @@ def encontrar_todas_las_rutas(dia, origen, destino):
 
 
 
-encontrar_todas_las_rutas("LUNES", "MDE", "CTG")
+rutasTotales("LUNES", "MDE", "CTG")
 
