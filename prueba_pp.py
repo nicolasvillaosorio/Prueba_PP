@@ -2,10 +2,9 @@ from collections import defaultdict
 import heapq
 from datetime import datetime
 
-from tkinter import Tk, Label, Button
+from tkinter import Tk, Label, Button, StringVar, OptionMenu,Frame
 from tkcalendar import Calendar
 
-dia_g=''
 
 
 
@@ -101,16 +100,17 @@ def rutasTotales(dia, origen, destino):
     if dia not in grafo_vuelos:
         print(f"No hay datos de vuelos para el día {dia}.")
         return None
-
+    ret_rutas=[]
     grafo = grafo_vuelos[dia]
     rutas_ordenadas = rutasDijkstra(grafo, origen, destino)
 
     if rutas_ordenadas:
-        print(f"Todas las rutas de {origen} a {destino} en {dia}, ordenadas de menor a mayor duración:")
+        ret_rutas.append((f"Todas las rutas de {origen} a {destino} en {dia}, ordenadas de menor a mayor duración:\n"))
         for duracion_total, ruta in rutas_ordenadas:
-            print(f"Ruta: {ruta} con duración total de {duracion_total} minutos.")
+            ret_rutas.append((f"Ruta: {ruta} con duración total de {duracion_total} minutos.\n"))
+        return ret_rutas
     else:
-        print(f"No existe una ruta de {origen} a {destino} en {dia}.")
+        return(f"No existe una ruta de {origen} a {destino} en {dia}.")
 
 
 def diaSemana(fecha):
@@ -121,37 +121,79 @@ def diaSemana(fecha):
     return dia_semana
 
 def seleccionDia():
-    
     fecha = calendario.get_date()
     dia = diaSemana(fecha)
-    dia_g=dia
-    res.config(text=f"El día de la semana es: {dia}")
+    return dia
+    #res.config(text=f"El día de la semana es: {dia}")
+
+def seleccionOrigenDestino():
+    origen= ciudad_origen.get()
+    destino= ciudad_destino.get()
+    return origen, destino
+
+
+def llamaSelectores():
+    dia= seleccionDia()
+    origen, destino = seleccionOrigenDestino()
+    #rutasTotales(dia, origen, destino)
+    res.config(text=rutasTotales(dia, origen, destino))
 
 
 
+############
+############
 ventana = Tk()
 ventana.title("Punto de Pago Air")
 ventana.geometry("600x600")
 
+frame_ciudades= Frame(ventana)
+frame_ciudades.pack(pady=10)
+
+############
+ciudad_origen = StringVar()
+ciudad_origen.set("Seleccion")  
+
+ciudad_destino = StringVar()
+ciudad_destino.set("Seleccion")  
+
+####################
+
+label_origen= Label(frame_ciudades, text="Seleccione el Origen")
+#label_origen.pack( side='left')
+label_origen.grid(row=0, column=0, padx=5)
+
+menu_origen = OptionMenu(frame_ciudades, ciudad_origen, "BOG", "MDE", "BAQ")
+menu_origen.grid(row=1, column=0, padx=5)
+
+###################
+
+label_destino= Label(frame_ciudades, text="Seleccione el Destino")
+label_destino.grid(row=0, column=1, padx=5)
+
+menu_destino = OptionMenu(frame_ciudades, ciudad_destino, "BOG", "MDE", "BAQ")
+menu_destino.grid(row=1, column=1, padx=5)
+
+
+##############################
 
 label_calendario= Label(ventana, text="Por favor seleccione la fecha de viaje")
 label_calendario.pack(pady=20)
 
-
 calendario = Calendar(ventana, selectmode="day", date_pattern="yyyy-mm-dd")
 calendario.pack(pady=30)
 
-
-dia_seleccion = Button(ventana, text="Seleccionar Fecha", command=seleccionDia)
+#######################
+dia_seleccion = Button(ventana, text="Seleccionar Fecha", command=llamaSelectores)
 dia_seleccion.pack(pady=10)
 
+###################################
 res = Label(ventana, text="")
 res.pack(pady=10)
 
 # Ejecutar la interfaz
 ventana.mainloop()
 
-
+print(f"origen: {origen}, destino: {destino}")
 #rutasTotales("LUNES", "MDE", "CTG")
 
 
