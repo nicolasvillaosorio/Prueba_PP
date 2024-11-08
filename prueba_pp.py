@@ -98,16 +98,16 @@ def rutasDijkstra(grafo, origen, destino):
 
 def rutasTotales(dia, origen, destino):
     if dia not in grafo_vuelos:
-        print(f"No hay datos de vuelos para el día {dia}.")
-        return None
-    ret_rutas=[]
+        return(f"No hay datos de vuelos para el día {dia}.")
+
+    ret_rutas=''
     grafo = grafo_vuelos[dia]
     rutas_ordenadas = rutasDijkstra(grafo, origen, destino)
 
     if rutas_ordenadas:
-        ret_rutas.append((f"Todas las rutas de {origen} a {destino} en {dia}, ordenadas de menor a mayor duración:\n"))
+        ret_rutas = f"Todas las rutas de {origen} a {destino} en {dia}, ordenadas de menor a mayor duración:\n\n"
         for duracion_total, ruta in rutas_ordenadas:
-            ret_rutas.append((f"Ruta: {ruta} con duración total de {duracion_total} minutos.\n"))
+            ret_rutas += f"Ruta: {' a '.join(ruta)} con duración total de {duracion_total} minutos.\n"
         return ret_rutas
     else:
         return(f"No existe una ruta de {origen} a {destino} en {dia}.")
@@ -131,13 +131,11 @@ def seleccionOrigenDestino():
     destino= ciudad_destino.get()
     return origen, destino
 
-
 def llamaSelectores():
     dia= seleccionDia()
     origen, destino = seleccionOrigenDestino()
     #rutasTotales(dia, origen, destino)
-    res.config(text=rutasTotales(dia, origen, destino))
-
+    frame_rutas.config(text=rutasTotales(dia, origen, destino))
 
 
 ############
@@ -147,7 +145,7 @@ ventana.title("Punto de Pago Air")
 ventana.geometry("600x600")
 
 frame_ciudades= Frame(ventana)
-frame_ciudades.pack(pady=10)
+frame_ciudades.pack(pady=30)
 
 ############
 ciudad_origen = StringVar()
@@ -177,24 +175,24 @@ menu_destino.grid(row=1, column=1, padx=5)
 ##############################
 
 label_calendario= Label(ventana, text="Por favor seleccione la fecha de viaje")
-label_calendario.pack(pady=20)
+label_calendario.pack(pady=10)
 
 calendario = Calendar(ventana, selectmode="day", date_pattern="yyyy-mm-dd")
-calendario.pack(pady=30)
+calendario.pack(pady=5)
 
 #######################
 dia_seleccion = Button(ventana, text="Seleccionar Fecha", command=llamaSelectores)
 dia_seleccion.pack(pady=10)
 
 ###################################
-res = Label(ventana, text="")
-res.pack(pady=10)
+frame_rutas = Label(ventana)
+frame_rutas.pack(pady=10)
+
 
 # Ejecutar la interfaz
 ventana.mainloop()
 
-print(f"origen: {origen}, destino: {destino}")
-#rutasTotales("LUNES", "MDE", "CTG")
+
 
 
 # # Ejemplo de uso
