@@ -1,6 +1,11 @@
 from collections import defaultdict
 import heapq
+from datetime import datetime
 
+from tkinter import Tk, Label, Button
+from tkcalendar import Calendar
+
+dia_g=''
 
 
 
@@ -75,9 +80,10 @@ def rutasDijkstra(grafo, origen, destino):
     rutas = []
 
     while cola_prioridad:
+
         duracion_actual, aeropuerto_actual, ruta_actual = heapq.heappop(cola_prioridad)
         ruta_actual = ruta_actual + [aeropuerto_actual]
-
+        
         if aeropuerto_actual == destino:
             rutas.append((duracion_actual, ruta_actual))
             continue
@@ -107,9 +113,52 @@ def rutasTotales(dia, origen, destino):
         print(f"No existe una ruta de {origen} a {destino} en {dia}.")
 
 
+def diaSemana(fecha):
+    fecha_obj = datetime.strptime(fecha, "%Y-%m-%d")
+    dias=["LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO", "DOMINGO"]
+    dia_semana = dias[fecha_obj.weekday()]
+    #fecha_obj.strftime("%A").upper()
+    return dia_semana
+
+def seleccionDia():
+    
+    fecha = calendario.get_date()
+    dia = diaSemana(fecha)
+    dia_g=dia
+    res.config(text=f"El día de la semana es: {dia}")
 
 
 
+ventana = Tk()
+ventana.title("Punto de Pago Air")
+ventana.geometry("600x600")
 
-rutasTotales("LUNES", "MDE", "CTG")
 
+label_calendario= Label(ventana, text="Por favor seleccione la fecha de viaje")
+label_calendario.pack(pady=20)
+
+
+calendario = Calendar(ventana, selectmode="day", date_pattern="yyyy-mm-dd")
+calendario.pack(pady=30)
+
+
+dia_seleccion = Button(ventana, text="Seleccionar Fecha", command=seleccionDia)
+dia_seleccion.pack(pady=10)
+
+res = Label(ventana, text="")
+res.pack(pady=10)
+
+# Ejecutar la interfaz
+ventana.mainloop()
+
+
+#rutasTotales("LUNES", "MDE", "CTG")
+
+
+# # Ejemplo de uso
+# fecha = "2024-11-07"
+# dia= diaSemana(fecha)
+# origen="MDE"
+# destino= "CTG"
+# #print(dia)
+# rutasTotales(dia, origen, destino)
