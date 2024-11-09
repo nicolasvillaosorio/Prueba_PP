@@ -11,47 +11,73 @@ from tkcalendar import Calendar
 #air_ports= ["BOG", "MDE", "BAQ", "BGA", "SMR", "CTG", "CLO", "EOH"]
 
 itinerario = {"LUNES":[
-    ("BOG", "MDE", 60),
-    ("BOG", "BAQ", 90),
-    ("MDE", "CTG", 75),
-    ("CTG", "BAQ", 45),
-    ("CTG", "BOG", 180)],
+    ("BOG" , "MDE", 60),
+    ("BOG" , "BAQ", 90),
+    ("MDE" , "CTG", 75),
+    ("MDE" , "BGA", 75),
+    ("CTG" , "CLO", 45),
+    ("CTG" , "SMR", 180),
+    ("SMR" , "BAQ", 60)],
 
     "MARTES":[
-    ("BOG", "MDE", 60),
-    ("BOG", "BAQ", 90),
-    ("MDE", "CTG", 75),
-    ("CTG", "BAQ", 45)],
+    ("MDE" , "CTG", 75),
+    ("MDE" , "BGA", 75),
+    ("CTG" , "CLO", 45),
+    ("BOG" , "BGA", 35),
+    ("SMR" , "CLO", 130),
+    ("SMR" , "EOH", 80),
+    ("CLO" , "BAQ", 25)
+    ],
 
     "MIERCOLES":[
-    ("BOG", "MDE", 60),
-    ("BOG", "BAQ", 90),
-    ("MDE", "CTG", 75),
-    ("CTG", "BAQ", 45)],
+    ("BOG" , "MDE", 60),
+    ("CLO" , "BAQ", 25),
+    ("EOH" , "BGA", 60),
+    ("MDE" , "BAQ", 45),
+    ("MDE" , "SMR", 50),
+    ("BAQ" , "CTG", 30),
+    ("BGA" , "CLO", 45)
+    ],
 
     "JUEVES":[
-    ("BOG", "MDE", 60),
-    ("BOG", "BAQ", 90),
-    ("MDE", "CTG", 75),
-    ("CTG", "BAQ", 45)],
+    ("MDE" , "BAQ", 45),
+    ("BAQ" , "SMR", 60),
+    ("BGA" , "CTG", 100),
+    ("SMR" , "CLO", 130),
+    ("CTG" , "EOH", 50),
+    ("BOG" , "EOH", 60),
+    ("CLO" , "MED", 120)
+    ],
 
     "VIERNES":[
-    ("BOG", "MDE", 60),
-    ("BOG", "BAQ", 90),
-    ("MDE", "CTG", 75),
-    ("CTG", "BAQ", 45)],
+    ("BOG" , "BAQ", 90),
+    ("MDE" , "EOH", 10),
+    ("SMR" , "BGA", 110),
+    ("CTG" , "BOG", 100),
+    ("CLO" , "BAQ", 25),
+    ("EOH" , "BGA", 60),
+    ("CTG" , "SMR", 180)
+    ],
 
     "SABADO":[
-    ("BOG", "MDE", 60),
-    ("BOG", "BAQ", 90),
-    ("MDE", "CTG", 75),
-    ("CTG", "BAQ", 45)],
+    ("BOG" , "SMR", 60),
+    ("MDE" , "CTG", 75),
+    ("BAQ" , "EOH", 50),
+    ("EOH" , "MDE", 10),
+    ("CTG" , "SMR", 180),
+    ("BOG" , "MDE", 60),
+    ("MDE" , "BAQ", 45)
+    ],
 
     "DOMINGO":[
-    ("BOG", "MDE", 60),
-    ("BOG", "BAQ", 90),
-    ("MDE", "CTG", 75),
-    ("CTG", "BAQ", 45)]
+    ("BOG" , "EOH" ,60),
+    ("MDE" , "BAQ" ,45),
+    ("SMR" , "CTG", 180),
+    ("BGA" , "MDE", 75),
+    ("CLO" , "BOG", 25),
+    ("EOH" , "BAQ", 50),
+    ("CTG" , "BGA", 100)
+    ]
 
 }
 
@@ -105,7 +131,7 @@ def rutasTotales(dia, origen, destino):
     rutas_ordenadas = rutasDijkstra(grafo, origen, destino)
 
     if rutas_ordenadas:
-        ret_rutas = f"Todas las rutas de {origen} a {destino} en {dia}, ordenadas de menor a mayor duración:\n\n"
+        ret_rutas = f"Las rutas de {origen} a {destino} el {dia}, ordenadas por duración son:\n\n"
         for duracion_total, ruta in rutas_ordenadas:
             ret_rutas += f"Ruta: {' a '.join(ruta)} con duración total de {duracion_total} minutos.\n"
         return ret_rutas
@@ -142,50 +168,58 @@ def llamaSelectores():
 ############
 ventana = Tk()
 ventana.title("Punto de Pago Air")
-ventana.geometry("600x600")
+ventana.geometry("500x600")
+ventana.config(bg="white")
+ventana.iconbitmap(default='puntopago_icon.ico')
+
+label_titulo= Label(ventana, text="Bienvenido a Punto Pago Air", font=("Verdana",15, "bold"), foreground="#003366", bg="white")
+label_titulo.pack(pady=18)
+
+
 
 frame_ciudades= Frame(ventana)
-frame_ciudades.pack(pady=30)
+frame_ciudades.pack(pady=20)
+frame_ciudades.config(bg="white")
 
 ############
 ciudad_origen = StringVar()
-ciudad_origen.set("Seleccion")  
+ciudad_origen.set("Org")  
 
 ciudad_destino = StringVar()
-ciudad_destino.set("Seleccion")  
+ciudad_destino.set("Dest")  
 
 ####################
 
-label_origen= Label(frame_ciudades, text="Seleccione el Origen")
+label_origen= Label(frame_ciudades, text="Seleccione el aeropuerto de Origen", font=("Verdana", 9, "bold") , foreground="#4D4D4D", bg="white", wraplength=150)
 #label_origen.pack( side='left')
 label_origen.grid(row=0, column=0, padx=5)
 
-menu_origen = OptionMenu(frame_ciudades, ciudad_origen, "BOG", "MDE", "BAQ")
+menu_origen = OptionMenu(frame_ciudades, ciudad_origen, "BOG", "MDE", "BAQ", "BGA", "SMR", "CTG", "CLO", "EOH")
 menu_origen.grid(row=1, column=0, padx=5)
 
 ###################
 
-label_destino= Label(frame_ciudades, text="Seleccione el Destino")
+label_destino= Label(frame_ciudades, text="Seleccione el aeropuerto de Destino", font=("Verdana",9, "bold"),foreground="#4D4D4D", bg="white", wraplength=150)
 label_destino.grid(row=0, column=1, padx=5)
 
-menu_destino = OptionMenu(frame_ciudades, ciudad_destino, "BOG", "MDE", "BAQ")
+menu_destino = OptionMenu(frame_ciudades, ciudad_destino, "BOG", "MDE", "BAQ", "BGA", "SMR", "CTG", "CLO", "EOH")
 menu_destino.grid(row=1, column=1, padx=5)
 
 
 ##############################
 
-label_calendario= Label(ventana, text="Por favor seleccione la fecha de viaje")
+label_calendario= Label(ventana, text="Por favor seleccione la fecha de viaje", font=("Verdana",10, "bold"), bg="white")
 label_calendario.pack(pady=10)
 
-calendario = Calendar(ventana, selectmode="day", date_pattern="yyyy-mm-dd")
+calendario = Calendar(ventana, selectmode="day", date_pattern="yyyy-mm-dd", font=("Verdana",8, "bold"))
 calendario.pack(pady=5)
 
 #######################
-dia_seleccion = Button(ventana, text="Seleccionar Fecha", command=llamaSelectores)
+dia_seleccion = Button(ventana, text="Seleccionar Fecha", command=llamaSelectores, font=("Verdana",10, "bold"), foreground="#007ACC", bg="white", activebackground="#007ACC", activeforeground="white")
 dia_seleccion.pack(pady=10)
 
 ###################################
-frame_rutas = Label(ventana)
+frame_rutas = Label(ventana, font=("Verdana",10, "bold"), justify= 'left',  wraplength=500, foreground="#333333", bg="white")
 frame_rutas.pack(pady=10)
 
 
