@@ -170,7 +170,17 @@ ventana = Tk()
 ventana.title("Punto de Pago Air")
 ventana.geometry("500x700")
 ventana.config(bg="white")
-ventana.iconbitmap(default='C:/Users/Caster/Desktop/Prueba_PP/puntopago.ico', bitmap='C:/Users/Caster/Desktop/Prueba_PP/puntopago.ico')
+
+import os, sys
+
+if getattr(sys, 'frozen', False):
+    path = sys._MEIPASS
+else:
+    path = os.path.abspath(".")
+
+icon_path = os.path.join(path, 'puntopago.ico')
+ventana.iconbitmap(icon_path)
+#ventana.iconbitmap(default='../Prueba_PP/puntopago.ico', bitmap='../Prueba_PP/puntopago.ico')
 
 label_titulo= Label(ventana, text="Bienvenido a Punto Pago Air", font=("Verdana",15, "bold"), foreground="#003366", bg="white")
 label_titulo.pack(pady=18)
@@ -211,7 +221,7 @@ menu_destino.grid(row=1, column=1, padx=5)
 label_calendario= Label(ventana, text="Por favor seleccione la fecha de viaje", font=("Verdana",10, "bold"), bg="white")
 label_calendario.pack(pady=10)
 
-calendario = Calendar(ventana, selectmode="day", date_pattern="yyyy-mm-dd", font=("Verdana",8, "bold"), mindate=datetime.now())
+calendario = Calendar(ventana, selectmode="day", date_pattern="yyyy-mm-dd", font=("Verdana",8, "bold"), mindate=datetime.now(), locale= "es")
 calendario.pack(pady=5)
 
 #######################
