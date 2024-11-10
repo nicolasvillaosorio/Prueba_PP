@@ -130,6 +130,9 @@ def rutasTotales(dia, origen, destino):
     grafo = grafo_vuelos[dia]
     rutas_ordenadas = rutasDijkstra(grafo, origen, destino)
 
+    if (origen == destino) or (origen == "Org") or (destino== "Dest"):
+        return("Seleccione una ruta valida")
+
     if rutas_ordenadas:
         ret_rutas = f"Las rutas de {origen} a {destino} el {dia}, ordenadas por duración son:\n\n"
         for duracion_total, ruta in rutas_ordenadas:
