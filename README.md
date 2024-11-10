@@ -1,8 +1,11 @@
+##### _NOTA:  Este aplicativo cuenta con un archivo ejecutable para mejorar la interaccion con el usuario, dicho ejecutable se encuentra dentro de la carpeta "dist"_
+
 # MANUAL DE USUARIO PARA APLICATIVO **PUNTO DE PAGO AIR**
 
 Este software le permite a los usuarios visualizar las rutas de vuelos disponibles a partir de una ciudad de origen, una ciudad de destino y una fecha tentativa de viaje.
 
-![image](https://github.com/user-attachments/assets/e9371b92-fa08-4a67-ac71-f1fb1edd77d1)
+![image](https://github.com/user-attachments/assets/96790eda-d19e-45d0-b596-bc51e30ccf7f)
+
 
 
 
@@ -11,31 +14,36 @@ Este software le permite a los usuarios visualizar las rutas de vuelos disponibl
 Para esto es necesario seleccionar: 
   1. Ciudad de origen.
 
-     ![image](https://github.com/user-attachments/assets/babdb4ff-9adf-4fe2-a59c-51c0453f95bf)
+     ![image](https://github.com/user-attachments/assets/28449011-8c5d-4ef4-81e0-4da47ea6c10e)
+
 
 
 
   2. Ciudad de destino.
 
-      ![image](https://github.com/user-attachments/assets/36191573-3ea4-4f2f-9883-4d45bd191312)
+      ![image](https://github.com/user-attachments/assets/3c6f2ed1-cef0-4d1e-9e5d-33504d723c59)
+
 
 
 
   3. Fecha (Mes,año,día)
   
-     ![calendario](https://github.com/user-attachments/assets/f790536e-f302-48ff-acf3-4f20da3ed83a)
+     ![calendario](https://github.com/user-attachments/assets/26424e3f-c108-47f8-889a-3db0eb6dae06)
+
 
  
   4. Dar click en botón "Aceptar".
 
-     ![aceptar](https://github.com/user-attachments/assets/81297d30-1c21-43f2-8c3e-78975a3ef67d)
+     ![aceptar](https://github.com/user-attachments/assets/42bd2ae9-576a-4699-865d-b50dff554036)
+
 
 
 
 
 Teniendo como resultado las rutas de vuelo, incluyendo sus respectivas escalas (si las hay) y la duración total del trayecto. La primera ruta mostrada será la de menor tiempo de viaje.
 
-  ![resultado](https://github.com/user-attachments/assets/f23f29fa-acf2-4e24-86fc-d39fb9a812ad)
+  ![resultado](https://github.com/user-attachments/assets/8520e474-7ff4-4587-b643-4344385f5c23)
+
 
 
 
