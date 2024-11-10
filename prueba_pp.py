@@ -168,9 +168,9 @@ def llamaSelectores():
 ############
 ventana = Tk()
 ventana.title("Punto de Pago Air")
-ventana.geometry("500x600")
+ventana.geometry("500x700")
 ventana.config(bg="white")
-ventana.iconbitmap(default='puntopago_icon.ico')
+ventana.iconbitmap(default='C:/Users/Caster/Desktop/Prueba_PP/puntopago.ico', bitmap='C:/Users/Caster/Desktop/Prueba_PP/puntopago.ico')
 
 label_titulo= Label(ventana, text="Bienvenido a Punto Pago Air", font=("Verdana",15, "bold"), foreground="#003366", bg="white")
 label_titulo.pack(pady=18)
@@ -190,7 +190,7 @@ ciudad_destino.set("Dest")
 
 ####################
 
-label_origen= Label(frame_ciudades, text="Seleccione el aeropuerto de Origen", font=("Verdana", 9, "bold") , foreground="#4D4D4D", bg="white", wraplength=150)
+label_origen= Label(frame_ciudades, text="Seleccione el aeropuerto de origen", font=("Verdana", 9, "bold") , foreground="#4D4D4D", bg="white", wraplength=150)
 #label_origen.pack( side='left')
 label_origen.grid(row=0, column=0, padx=5)
 
@@ -199,7 +199,7 @@ menu_origen.grid(row=1, column=0, padx=5)
 
 ###################
 
-label_destino= Label(frame_ciudades, text="Seleccione el aeropuerto de Destino", font=("Verdana",9, "bold"),foreground="#4D4D4D", bg="white", wraplength=150)
+label_destino= Label(frame_ciudades, text="Seleccione el aeropuerto de destino", font=("Verdana",9, "bold"),foreground="#4D4D4D", bg="white", wraplength=150)
 label_destino.grid(row=0, column=1, padx=5)
 
 menu_destino = OptionMenu(frame_ciudades, ciudad_destino, "BOG", "MDE", "BAQ", "BGA", "SMR", "CTG", "CLO", "EOH")
@@ -211,28 +211,18 @@ menu_destino.grid(row=1, column=1, padx=5)
 label_calendario= Label(ventana, text="Por favor seleccione la fecha de viaje", font=("Verdana",10, "bold"), bg="white")
 label_calendario.pack(pady=10)
 
-calendario = Calendar(ventana, selectmode="day", date_pattern="yyyy-mm-dd", font=("Verdana",8, "bold"))
+calendario = Calendar(ventana, selectmode="day", date_pattern="yyyy-mm-dd", font=("Verdana",8, "bold"), mindate=datetime.now())
 calendario.pack(pady=5)
 
 #######################
-dia_seleccion = Button(ventana, text="Seleccionar Fecha", command=llamaSelectores, font=("Verdana",10, "bold"), foreground="#007ACC", bg="white", activebackground="#007ACC", activeforeground="white")
-dia_seleccion.pack(pady=10)
+dia_seleccion = Button(ventana, text="Aceptar", command=llamaSelectores, font=("Verdana",10, "bold"), foreground="#007ACC", bg="white", activebackground="#007ACC", activeforeground="white")
+dia_seleccion.pack(pady=20)
 
 ###################################
-frame_rutas = Label(ventana, font=("Verdana",10, "bold"), justify= 'left',  wraplength=500, foreground="#333333", bg="white")
+frame_rutas = Label(ventana, font=("Verdana",10, "bold"), justify= 'left',  wraplength=450, foreground="#333333", bg="white")
 frame_rutas.pack(pady=10)
 
 
 # Ejecutar la interfaz
 ventana.mainloop()
 
-
-
-
-# # Ejemplo de uso
-# fecha = "2024-11-07"
-# dia= diaSemana(fecha)
-# origen="MDE"
-# destino= "CTG"
-# #print(dia)
-# rutasTotales(dia, origen, destino)
